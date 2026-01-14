@@ -3,13 +3,13 @@ from storage import *
 
 
 password = 1234
-
+accounts = load_accounts()
+book.load_books()
 while True:
-    book.load_books()
-    print("Welcome To Your Library Management System")
+    print("Welcome To The Royal Library Management System")
     print("-------------------------------------------")
     print("1. Administrator")
-    print("2. Member")
+    print("2. Sign In")
     print("3. Sign Up")
     print("4. Log Out")
 
@@ -25,6 +25,8 @@ while True:
             print("3. Update number of books")
             print("4. View Books")
             print("5. Back")
+            print("6. Remove an account")
+            print("7. View Accounts")
             request = int(input(""))
             if request == 1:
                 name_of_book = input("Enter name of book: ").lower()
@@ -56,6 +58,18 @@ while True:
             elif request == 5:
                 pass
 
+            elif request == 6:
+                user_input = input("Enter the username: ").strip().lower()
+
+                for uname in list(accounts.keys()):
+                    if uname == user_input:   
+                        del accounts[uname]    
+                        print(f"{uname} deleted successfully")
+                        save_accounts(accounts)
+
+            elif request == 7:
+                print(accounts)
+
             else:
                 print("Enter a valid input")
                 continue
@@ -65,14 +79,30 @@ while True:
             continue
 
     elif request == 2:
-        print("Feature still under development")
-        continue
+        account_name = input("Enter account name: ").strip()
+        if account_name in accounts:
+            pin = input("Pin: ")
+            if pin == accounts[account_name]:
+                print("Congratulations, you have successfully logged in!")
+                
 
+        else:
+            print("Your account does not exist")
+    
     elif request == 3:
-        print("Feature still under development")
-        continue
+        account_name = input("Enter account name: ")
+        pin = input("Enter pin: ")
+        pin1 = input("Confirm pin: ")
+        accounts[account_name] = pin
+        if pin == pin1:
+            print(f"Congratulations, {account_name} you have created a new account!!")
+            save_accounts(accounts)
+
+        else:
+            print("Pins do not match!!")
 
     elif request == 4:
+        print("Thank you for using the Royal Library System!")
         break
 
     else: 
