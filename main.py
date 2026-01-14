@@ -92,17 +92,8 @@ while True:
                     else:
                         print(f"Sorry we do not have{book_name} available")
                 elif request == 3:
-                    pass
-
-                elif request == 4:
-                    pass    
-
-                elif request == 5:
-                    pass
-
-                elif request == 6:
                     continue
-
+                
                 else:
                     print("Input invalid")
                     break      
