@@ -1,35 +1,23 @@
 from classes import book
 from storage import *
+from menus import admin_menu, main_menu, member_menu
+import os
 
 
 password = 1234
 accounts = load_accounts()
 book.load_books()
 while True:
-    print("Welcome To The Royal Library Management System")
-    print("-------------------------------------------")
-    print("1. Administrator")
-    print("2. Sign In")
-    print("3. Sign Up")
-    print("4. Log Out")
-
+    main_menu()
     request = int(input(""))
     if request == 1:
         pin = input("Enter your pin: ").strip()
         pin = int(pin)
         if pin == password:
-            print("Welcome Admin")
-            print("---------------")
-            print("1. Add Books")
-            print("2. Remove books")
-            print("3. Update number of books")
-            print("4. View Books")
-            print("5. Back")
-            print("6. Remove an account")
-            print("7. View Accounts")
+            admin_menu()
             request = int(input(""))
             if request == 1:
-                name_of_book = input("Enter name of book: ").lower()
+                name_of_book = input("Enter name of book: ").lower().strip()
                 quantity = input(f"Nuber of ({name_of_book}) available: ")
                 book.books[name_of_book] = quantity
                 print(f"Congratulations {name_of_book} has been successfully added")
@@ -84,7 +72,40 @@ while True:
             pin = input("Pin: ")
             if pin == accounts[account_name]:
                 print("Congratulations, you have successfully logged in!")
-                
+                member_menu()   
+                request = input("").strip()
+                request = int(request)
+                if request == 1:
+                    print(list(book.books.items()))
+
+                elif request == 2:
+                    book_name = input("Enter the name of book: ").strip().lower()
+                    if book_name in book.books:
+                        print(f"{book_name} is availble")
+                        request = input("Press y to read book: ").lower().strip()
+                        if request == "y":
+                            pdf_path = f"{book_name}.pdf"
+                            os.startfile(pdf_path)
+
+                        else:
+                            continue
+                    else:
+                        print(f"Sorry we do not have{book_name} available")
+                elif request == 3:
+                    pass
+
+                elif request == 4:
+                    pass    
+
+                elif request == 5:
+                    pass
+
+                elif request == 6:
+                    continue
+
+                else:
+                    print("Input invalid")
+                    break      
 
         else:
             print("Your account does not exist")

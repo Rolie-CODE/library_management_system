@@ -35,3 +35,5 @@ def load_accounts():
 def save_accounts(accounts):
     with open(FILE_NAME, "w") as file:
         json.dump(accounts, file, indent=4)
+
+
