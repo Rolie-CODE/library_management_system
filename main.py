@@ -3,6 +3,26 @@ from storage import *
 from menus import admin_menu, main_menu, member_menu
 import os
 
+def create_account(accounts):
+    username = input("Enter username: ").strip().lower()
+
+    if username in accounts:
+        print("Username already exists")
+        return
+
+    pin = input("Enter 4-digit PIN: ").strip()
+
+    if not pin.isdigit() or len(pin) != 4:
+        print("PIN must be exactly 4 digits")
+        return
+
+    accounts[username] = {
+        "pin": pin,
+        "books_borrowed": []
+    }
+
+    print(f"Account '{username}' created successfully")
+
 
 password = 1234
 accounts = load_accounts()
@@ -78,7 +98,7 @@ while True:
         account_name = input("Enter account name: ").strip()
         if account_name in accounts:
             pin = input("Pin: ")
-            if pin == accounts[account_name]:
+            if pin == accounts[account_name]["pin"]:
                 print("Congratulations, you have successfully logged in!")
                 member_menu()   
                 request = input("").strip()
@@ -100,6 +120,19 @@ while True:
                     else:
                         print(f"Sorry we do not have{book_name} available")
                 elif request == 3:
+                    name_of_book = input("Enter the name of the book: ").lower().strip()
+                    current_user = account_name  
+                    accounts[current_user]["books_borrowed"].append(f"{name_of_book}")
+                    save_accounts(accounts)
+                    print(f"Congratulations you have successfully borrowed: {name_of_book}")
+                
+                    continue
+
+                elif request == 4:
+                    current_user = account_name
+                    print(accounts[current_user]["books_borrowed"])
+
+                elif request == 5:
                     continue
 
                 else:
@@ -110,19 +143,8 @@ while True:
             print("Your account does not exist")
     
     elif request == 3:
-        account_name = input("Enter account name: ")
-        pin = input("Enter pin: ")
-        if not pin.isdigit() or len(pin) != 4:
-            print("Pin must be 4 numeric digits!!!")
-            break
-        pin1 = input("Confirm pin: ")
-        accounts[account_name] = pin
-        if pin == pin1:
-            print(f"Congratulations, {account_name} you have created a new account!!")
-            save_accounts(accounts)
-
-        else:
-            print("Pins do not match!!")
+        create_account(accounts)
+        save_accounts(accounts)
 
     elif request == 4:
         print("Thank you for using the Royal Library System!")

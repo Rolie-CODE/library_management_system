@@ -20,4 +20,6 @@ def admin_menu():
 def member_menu():
     print("1. View Books")
     print("2. Search Books")
-    print("3. Back")
+    print("3. Borrow book")
+    print("4. View borrowed books")
+    print("5. Back")

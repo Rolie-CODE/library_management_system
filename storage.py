@@ -19,10 +19,11 @@ class book:
             json.dump(cls.books, file, indent=4)
 
 accounts = {
-    "account_name":"pin"
+    "roland0":{
+        "pin":1234,
+        "borrowed_books":[]
+    }
 }
-
-
 
 FILE_NAME = "accounts.json"
 
@@ -35,5 +36,3 @@ def load_accounts():
 def save_accounts(accounts):
     with open(FILE_NAME, "w") as file:
         json.dump(accounts, file, indent=4)
-
-
