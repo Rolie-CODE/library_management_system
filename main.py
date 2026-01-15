@@ -9,10 +9,17 @@ accounts = load_accounts()
 book.load_books()
 while True:
     main_menu()
-    request = int(input(""))
+    try:
+        request = int(input(""))
+    except ValueError:
+        print("Enter a number")
+        break
     if request == 1:
-        pin = input("Enter your pin: ").strip()
-        pin = int(pin)
+        try:
+            pin = int(input("Enter your pin: ").strip())
+        except ValueError:
+            print("Enter a 4 digit pin")
+            break
         if pin == password:
             admin_menu()
             request = int(input(""))
@@ -42,6 +49,7 @@ while True:
 
             elif request == 4:
                 print(book.books)
+                continue
 
             elif request == 5:
                 pass
@@ -93,7 +101,7 @@ while True:
                         print(f"Sorry we do not have{book_name} available")
                 elif request == 3:
                     continue
-                
+
                 else:
                     print("Input invalid")
                     break      
@@ -104,6 +112,9 @@ while True:
     elif request == 3:
         account_name = input("Enter account name: ")
         pin = input("Enter pin: ")
+        if not pin.isdigit() or len(pin) != 4:
+            print("Pin must be 4 numeric digits!!!")
+            break
         pin1 = input("Confirm pin: ")
         accounts[account_name] = pin
         if pin == pin1:
